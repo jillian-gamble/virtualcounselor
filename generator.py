@@ -6,14 +6,14 @@ speaking it) '''
 
 import app, intake, understander, processor
 
-def question():
+def question(conversation):
 	print("Questioning...")
 
 ''' Definition from Ivey et al (2017) p. 134:
 "Encourage with short responses that help the client keep talking. 
 These responses may be verbal (repeating key words and short 
 statements) or nonverbal (head-nods and smiling)"'''
-def encourage():
+def encourage(conversation):
 	print("Encouraging...")
 
 ''' Definition from Ivey et al (2017) p. 134:
@@ -21,34 +21,34 @@ def encourage():
 be sure to use the client's main words when you paraphrase.
 Paraphrases are often fed back to the client in a questioning
 tone of voice."'''
-def paraphrase():
+def paraphrase(conversation):
 	print("Paraphrasing...")
 
 ''' Definition from Ivey et al (2017) p. 135:
 "Summarize client comments and integrate throughts, emotions, 
 and behaviors. Summarizing is similar to paraphrasing but used 
 over a longer time span."'''
-def summarize():
+def summarize(conversation):
 	print("Summarizing...")
 
 ''' Definition from Ivey et al (2017) p. 135:
 "Periodically check with your client to discover how your 
 interviewing lead or skill was received. "Is that right?" 
 "Did I hear you correctly?" "What might I have missed?""'''
-def checkout():
+def checkout(conversation):
 	print("Checking out...")
 
-def reflect_feelings():
+def reflect_feelings(conversation):
 	print("Reflecting feelings...")
 
-def focus():
+def focus(conversation):
 	print("Focusing...")
 
-def confront():
+def confront(conversation):
 	print("Confronting...")
 
-def reflect_meaning():
+def reflect_meaning(conversation):
 	print("Reflecting meaning...")
 
-def reframe():
+def reframe(conversation):
 	print("Reframing...")
