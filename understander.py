@@ -14,30 +14,28 @@ import pandas as pd
 #from keras.preprocessing.sequence import pad_sequences
 #from sklearn.preprocessing import normalize
 
-CONTENT_AREAS = [
+TOPICS = [
 	"STRESS",
 	"ANXIETY",
 	"DEPRESSION",
 	"LOSS",
 	"INTERPERSONAL_CONFLICT",
-	"INTERNAL_CONFLICT"]	# more ?
+	"INTERNAL_CONFLICT"
+	"UNKNOWN"]	# more ?
 
-MSG_CATEGORIES = [
+CATEGORIES = [
 	"EXPERIENCE",
 	"FEELING",
 	"MEANING",
 	"QUESTION",
 	"UNKOWN"]
 
+nlp = spacy.load("en_core_web_sm")
+
 def parse_msg(msg):
 	doc = nlp(msg)
 	print("Noun phrases:", [chunk.text for chunk in doc.noun_chunks])
-	return msg
-
-nlp = spacy.load("en_core_web_sm")
-
-while True:
-	print(parse_msg(input("Sentence:")))
+	return doc
 
 # reduces the class of tags to adj, noun, adv, verb, or UNK
 def reduce_tag(tag):
@@ -57,12 +55,13 @@ def reduce_tag(tag):
 	else:
 		return "UNK"
 
-
 def load_depeche():
 	df = pd.read_csv('DepecheMood_V1.0/all.csv', delimiter=',')
 	dicts = [[row[col] for col in df.columns] for row in df.to_dict('records')]
 
 	for entry in dicts:
+		
+
 		word = entry[0].split("#")[0]
 		pos = entry[0].split("#")[1]
 
@@ -71,6 +70,7 @@ def load_depeche():
 		entry = [round(entry[i], 3) for i in range(2, 6)]
 
 	return dicts
+
 # pos tag
 def tag(token):
 	return reduce_tag(nltk.pos_tag([token])[0][1])
@@ -106,9 +106,9 @@ def get_sentence_emotions(raw_msg):
 
 	return (emo_tokens, line_avg)
 
-
 def get_topic(raw_msg, parsed_msg):
-	return CONTENT_AREAS[0]
+
+	return TOPICS[0]
 
 def get_category(raw_msg, parsed_msg):
 	return MSG_CATEGORIES[0]
