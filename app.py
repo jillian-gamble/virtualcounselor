@@ -1,4 +1,4 @@
-''' This program is responsible for 
+''' This program is responsible for
 instantiating the GUI, connecting
 to the microphone and speaker, and
 managing the program flow '''
@@ -42,7 +42,7 @@ class Statement():
 		self.speaker = speaker
 		self.raw_msg = raw_msg	# each sentence in the statement
 		self.parsed_msg = understander.parse_msg(self.raw_msg)
-		self.msg_emotions = understander.get_emotions(self.raw_msg, self.parsed_msg)
+		self.msg_emotions = understander.get_sentence_emotions(self.raw_msg, self.parsed_msg)
 		self.msg_topic = understander.get_topic(self.raw_msg, self.parsed_msg)
 		self.msg_category = understander.get_category(self.raw_msg, self.parsed_msg)
 
@@ -57,8 +57,8 @@ class Client():
 
 class Counselor():
 	def __init__(self):
-		self.persona = []		# the same as client personality 
-								# except more variable and 
+		self.persona = []		# the same as client personality
+								# except more variable and
 								# complementary to the client
 
 	def speak(self, sentence):
@@ -75,7 +75,7 @@ class Counselor():
 
 		while mixer.music.get_busy():
 			pygame.time.wait(100)
-		
+
 	def listen(self):
 		print("YOU: ", end="")
 
