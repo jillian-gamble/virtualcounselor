@@ -1,7 +1,7 @@
-''' This program is responsible for 
-taking the processor's prediction 
+''' This program is responsible for
+taking the processor's prediction
 and the conversation and outputting
-an utterance as response (and 
+an utterance as response (and
 speaking it) '''
 
 import app, intake, understander, processor
@@ -10,11 +10,15 @@ def question():
 	print("Questioning...")
 
 ''' Definition from Ivey et al (2017) p. 134:
-"Encourage with short responses that help the client keep talking. 
-These responses may be verbal (repeating key words and short 
+"Encourage with short responses that help the client keep talking.
+These responses may be verbal (repeating key words and short
 statements) or nonverbal (head-nods and smiling)"'''
 def encourage():
 	print("Encouraging...")
+	A = "Tell me more about that."
+	B = "I hear what you're saying."
+	C = "I see."
+	D =
 
 ''' Definition from Ivey et al (2017) p. 134:
 "Shorten or clarify the essence of what has just been said, but
@@ -25,15 +29,15 @@ def paraphrase():
 	print("Paraphrasing...")
 
 ''' Definition from Ivey et al (2017) p. 135:
-"Summarize client comments and integrate throughts, emotions, 
-and behaviors. Summarizing is similar to paraphrasing but used 
+"Summarize client comments and integrate throughts, emotions,
+and behaviors. Summarizing is similar to paraphrasing but used
 over a longer time span."'''
 def summarize():
 	print("Summarizing...")
 
 ''' Definition from Ivey et al (2017) p. 135:
-"Periodically check with your client to discover how your 
-interviewing lead or skill was received. "Is that right?" 
+"Periodically check with your client to discover how your
+interviewing lead or skill was received. "Is that right?"
 "Did I hear you correctly?" "What might I have missed?""'''
 def checkout():
 	print("Checking out...")
