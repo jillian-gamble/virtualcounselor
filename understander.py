@@ -5,13 +5,14 @@ speech. '''
 import app, intake, processor, generator
 from random import randint
 from pickle import load
-from keras.models import load_model
+#from keras.models import load_model
 import math
 import nltk
+import spacy
 import numpy as np
 import pandas as pd
-from keras.preprocessing.sequence import pad_sequences
-from sklearn.preprocessing import normalize
+#from keras.preprocessing.sequence import pad_sequences
+#from sklearn.preprocessing import normalize
 
 CONTENT_AREAS = [
 	"STRESS",
@@ -29,7 +30,14 @@ MSG_CATEGORIES = [
 	"UNKOWN"]
 
 def parse_msg(msg):
+	doc = nlp(msg)
+	print("Noun phrases:", [chunk.text for chunk in doc.noun_chunks])
 	return msg
+
+nlp = spacy.load("en_core_web_sm")
+
+while True:
+	print(parse_msg(input("Sentence:")))
 
 # reduces the class of tags to adj, noun, adv, verb, or UNK
 def reduce_tag(tag):
