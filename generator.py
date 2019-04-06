@@ -54,10 +54,5 @@ def confront(conversation):
 def reflect_meaning(conversation):
 	print("Reflecting meaning...")
 
-<<<<<<< HEAD
 def reframe():
 	print("Reframing...")
-=======
-def reframe(conversation):
-	print("Reframing...")
->>>>>>> f420d6bd2a686329806cab03082388a74b6d171b
