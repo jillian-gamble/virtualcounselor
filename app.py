@@ -38,9 +38,13 @@ class Conversation():
 
 
 class Statement():
-	def __init__(self, statement, speaker):
+	def __init__(self, raw_msg, speaker):
 		self.speaker = speaker
-		self.statement = statement	# each sentence in the statement
+		self.raw_msg = raw_msg	# each sentence in the statement
+		self.parsed_msg = understander.parse_msg(self.raw_msg)
+		self.msg_emotions = understander.get_emotions(self.raw_msg, self.parsed_msg)
+		self.msg_topic = understander.get_topic(self.raw_msg, self.parsed_msg)
+		self.msg_category = understander.get_category(self.raw_msg, self.parsed_msg)
 
 	def process_syntax(self):
 		words = statement.split(" ")
