@@ -61,12 +61,13 @@ def load_depeche():
 	dicts = [[row[col] for col in df.columns] for row in df.to_dict('records')]
 
 	for entry in dicts:
+		#print(entry)
 		word = entry[0].split("#")[0]
 		pos = entry[0].split("#")[1]
 
 		entry[0] = word
 		entry.insert(1, pos)
-		entry = [round(entry[i], 3) for i in range(2, 9)]
+		entry = [round(entry[i], 3) for i in range(2, 10)]
 
 	return dicts
 
@@ -79,10 +80,20 @@ def get_lexical_emotions(word, pos = None):
 	for entry in EMLEX:
 		if entry[0] == word:
 			if pos == None or pos == entry[1]:
-				return entry[2:10]
+				return [entry[i] * entry[10] * 10000 for i in range(2,10)]
+
 			else:
 				continue
 	return [0,0,0,0,0,0,0,0]
+
+def get_stdev(word, pos = None):
+	for entry in EMLEX:
+		if entry[0] == word:
+			if pos == None or pos == entry[1]:
+				return entry[10]
+			else:
+				continue
+	return 0
 
 # add a feature for emotions to each word in the line
 def get_sentence_emotions(raw_msg):
@@ -105,7 +116,7 @@ def get_sentence_emotions(raw_msg):
 	for token in tagged_tokens:
 		emo_features = get_lexical_emotions(token[0], token[1])
 
-		if emo_features = 
+		#if emo_features = 
 
 		emo_tokens.append((token[0], token[1], emo_features))
 
@@ -126,7 +137,7 @@ print("Loading DepecheMood...")
 EMLEX = load_depeche()
 print("Loaded DepecheMood")
 
-emotions = get_sentence_emotions("")[1]
+emotions = get_sentence_emotions("I am happy")[1]
 print("Fear: " + str(emotions[0]))
 print("Amusement: " + str(emotions[1]))
 print("Anger: " + str(emotions[2]))
