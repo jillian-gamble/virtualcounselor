@@ -44,6 +44,7 @@ def checkout(conversation):
 
 def reflect_feelings(conversation):
 	print("Reflecting feelings...")
+	
 
 def focus(conversation):
 	print("Focusing...")
