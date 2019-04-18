@@ -1,6 +1,7 @@
 ''' This program is responsible for
 listening and parsing the client's
 speech. '''
+print("Loading imports...")
 
 import app, intake, processor, generator
 from random import randint
@@ -11,6 +12,8 @@ import nltk
 import spacy
 import numpy as np
 import pandas as pd
+
+print("Loaded imports")
 #from keras.preprocessing.sequence import pad_sequences
 #from sklearn.preprocessing import normalize
 
@@ -71,6 +74,9 @@ def load_depeche():
 
 	return dicts
 
+def get_emotionality(word, pos = None):
+	return math.floor(26.2292*get_stdev(word, pos) + 0.11259)
+
 # pos tag
 def tag(token):
 	return reduce_tag(nltk.pos_tag([token])[0][1])
@@ -81,7 +87,7 @@ def get_lexical_emotions(word, pos = None):
 		if entry[0] == word:
 			if pos == None or pos == entry[1]:
 				print(entry)
-				return [math.pow(entry[i], entry[10]) * 10000 for i in range(2,10)]
+				return [math.pow(entry[i], entry[10]) * get_emotionality(word, pos) for i in range(2,10)]
 
 			else:
 				continue
@@ -123,6 +129,7 @@ def get_sentence_emotions(raw_msg):
 
 		line_avg = [line_avg[i] + emo_features[i] for i in range(8)]
 
+	# divide the total intensity by the total number of words for each emotion
 	line_avg = [round(line_avg[i] / len(tagged_tokens), 2) for i in range(8)]
 
 	return (emo_tokens, line_avg)
@@ -174,3 +181,6 @@ while 1:
 	print("Inspiration: " + str(emotions[6]))
 	print("Sadness: " + str(emotions[7]) + "\n")
 	print("Top 3 Emotions: " + str(get_top_three_emotions(emotions)))
+	# word = input("Word: ")
+	# print(get_emotionality(word))
+	# print(get_top_three_emotions(get_lexical_emotions(word)))
