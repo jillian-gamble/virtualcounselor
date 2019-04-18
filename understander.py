@@ -80,7 +80,8 @@ def get_lexical_emotions(word, pos = None):
 	for entry in EMLEX:
 		if entry[0] == word:
 			if pos == None or pos == entry[1]:
-				return [entry[i] * entry[10] * 10000 for i in range(2,10)]
+				print(entry)
+				return [math.pow(entry[i], entry[10]) * 10000 for i in range(2,10)]
 
 			else:
 				continue
@@ -137,12 +138,39 @@ print("Loading DepecheMood...")
 EMLEX = load_depeche()
 print("Loaded DepecheMood")
 
-emotions = get_sentence_emotions("I am happy")[1]
-print("Fear: " + str(emotions[0]))
-print("Amusement: " + str(emotions[1]))
-print("Anger: " + str(emotions[2]))
-print("Annoyance: " + str(emotions[3]))
-print("Indifference: " + str(emotions[4]))
-print("Happiness: " + str(emotions[5]))
-print("Inspiration: " + str(emotions[6]))
-print("Sadness: " + str(emotions[7]))
+def get_top_three_emotions(arr):
+	max_i = -1
+	max_val = -1
+
+	result = []
+
+	emotions = ["FEA", "AMU", "ANG", "ANN", "IDC", "JOY", "INS", "SAD"]
+
+	for j in range(3):
+		for i in range(len(arr)):
+
+			if arr[i] > max_val:
+				max_val = arr[i]
+				max_i = i
+
+		result.append(emotions[max_i])
+
+		arr.pop(max_i)
+		emotions.pop(max_i)
+
+		max_i = -1
+		max_val = -1
+
+	return result
+
+while 1:
+	emotions = get_sentence_emotions(input("Sentence: "))[1]
+	print("\nFear: " + str(emotions[0]))
+	print("Amusement: " + str(emotions[1]))
+	print("Anger: " + str(emotions[2]))
+	print("Annoyance: " + str(emotions[3]))
+	print("Indifference: " + str(emotions[4]))
+	print("Happiness: " + str(emotions[5]))
+	print("Inspiration: " + str(emotions[6]))
+	print("Sadness: " + str(emotions[7]) + "\n")
+	print("Top 3 Emotions: " + str(get_top_three_emotions(emotions)))
