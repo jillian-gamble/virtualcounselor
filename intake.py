@@ -16,6 +16,7 @@ N=4
 
 def ConductInterview():
 	personality = [0,0,0,0,0]
+	print("Please answer the following questions on a scale of 1 to 5")
 	personality[O] += input("I am the life of the party.") #openness
 	personality[A] += input("I feel little concern for others.") #agreeableness
 	personality[C] += input("I am always prepared.") #conscienciousness
