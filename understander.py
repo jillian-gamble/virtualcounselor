@@ -61,7 +61,7 @@ def reduce_tag(tag):
 	if tag in v:
 		return 'v'
 	else:
-		return "UNK"
+		return "UNK"L
 
 # pos tag
 def tag(token):
@@ -104,7 +104,7 @@ def get_lexical_emotions(word, pos = None):
 	for entry in EMLEX:
 		if entry[0] == word:
 			if pos == None or pos == entry[1]:
-				print(entry)
+				#print(entry)
 				return [math.pow(entry[i], entry[10]) * get_emotionality(word, pos) for i in range(2,10)]
 
 			else:

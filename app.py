@@ -75,11 +75,17 @@ class Client():
 		self.personality = []	# a dict of trait-->value
 		self.mood = {}			# a dict of descriptor-->value
 
+	def is_client(self):
+		return True
+
 class Counselor():
 	def __init__(self):
 		self.persona = []		# the same as client personality
 								# except more variable and
 								# complementary to the client
+
+	def is_client(self):
+		return False
 
 	def speak(self, sentence):
 		print("[COUNSELOR]\t" + sentence)

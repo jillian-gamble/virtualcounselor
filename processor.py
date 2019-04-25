@@ -12,7 +12,6 @@ MICROSKILLS = [
 	"SUMM",
 	"FEEL",
 	"FOCU",
-	"CONF",
 	"MEAN",
 	"REFR"
 ]					# note: checkout is a microskill used within
@@ -47,10 +46,7 @@ def generate_response(nMicroskill, conversation):
 		generator.reflect_feelings(conversation)
 
 	elif ms == "FOCU":
-		generator.focus(conversation)
-
-	elif ms == "CONF":
-		generator.confront(conversation)		
+		generator.focus(conversation)		
 
 	elif ms == "MEAN":
 		generator.reflect_meaning(conversation)
