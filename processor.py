@@ -12,7 +12,6 @@ MICROSKILLS = [
 	"SUMM",
 	"FEEL",
 	"FOCU",
-	"CONF",
 	"MEAN",
 	"REFR"
 ]					# note: checkout is a microskill used within
@@ -23,9 +22,9 @@ MICROSKILLS = [
 microskill would be best from the
 client's most recent messages'''
 def pick_microskill(conversation):
-	ran = random.randint(len(0, MICROSKILLS))
+	ran = random.randint(0, len(MICROSKILLS) - 1)
 
-	conversation.most_recent_statement.selected_microskill = ran
+	conversation.most_recent_statement().selected_microskill = ran
 	return ran
 
 def generate_response(nMicroskill, conversation):
@@ -47,10 +46,7 @@ def generate_response(nMicroskill, conversation):
 		generator.reflect_feelings(conversation)
 
 	elif ms == "FOCU":
-		generator.focus(conversation)
-
-	elif ms == "CONF":
-		generator.confront(conversation)		
+		generator.focus(conversation)		
 
 	elif ms == "MEAN":
 		generator.reflect_meaning(conversation)
@@ -59,6 +55,6 @@ def generate_response(nMicroskill, conversation):
 		generator.reframe(conversation)
 
 def test_all_microskills(conversation):
-	for i in range(len(MICROSKILLS)):
-		generate_response(i)
+	for i in range(0, len(MICROSKILLS) - 1):
+		generate_response(i, conversation)
 

@@ -41,31 +41,30 @@ class Conversation():
 		self.counselor.speak("Why don't you tell me what's on your mind?")
 
 		while True:
-			# Get the user's response
+			# Get the user's response and parse it
 			response = Statement(input("[YOU]\t\t"), self.client)
 
 			# append it to the conversation
 			self.statements.append(response)
 
-			# process its grammatical features, emotions, etc.
-			understander.parse_msg(self)
-
 			# select a microskill
-			self.most_recent_statement.microskill_response = processor.pick_microskill()
+			self.most_recent_statement().microskill_response = processor.pick_microskill(self)
 
 			# generate it
-			processor.generate_response(self.most_recent_statement.microskill_response)
+			processor.test_all_microskills(self)
+			#processor.generate_response(self.most_recent_statement().microskill_response, self)
 
 
 	def most_recent_statement(self):
-		return self.statements[len(statements) - 1]
+		return self.statements[len(self.statements) - 1]
 
 class Statement():
 	def __init__(self, raw_msg, speaker):
 		self.speaker = speaker
 		self.raw_msg = raw_msg	# each sentence in the statement
-		self.parsed_msg = understander.parse_msg(self.raw_msg)
-		self.msg_emotions = understander.get_sentence_emotions(self.raw_msg, self.parsed_msg)
+		self.parsed_msg = understander.parse_msg(self)	# parsed_msg is a nlp() object
+		self.noun_phrases = [chunk.text for chunk in self.parsed_msg.noun_chunks]
+		self.msg_emotions = understander.get_sentence_emotions(self.raw_msg)
 		self.msg_topic = understander.get_topic(self.raw_msg, self.parsed_msg)
 		self.msg_category = understander.get_category(self.raw_msg, self.parsed_msg)
 		self.microskill_response = None
@@ -76,26 +75,32 @@ class Client():
 		self.personality = []	# a dict of trait-->value
 		self.mood = {}			# a dict of descriptor-->value
 
+	def is_client(self):
+		return True
+
 class Counselor():
 	def __init__(self):
 		self.persona = []		# the same as client personality
 								# except more variable and
 								# complementary to the client
 
+	def is_client(self):
+		return False
+
 	def speak(self, sentence):
 		print("[COUNSELOR]\t" + sentence)
 
-		tts = gTTS(sentence, lang="en")
-		mixer.init()
+		#tts = gTTS(sentence, lang="en")
+		#mixer.init()
 
-		sf = TemporaryFile()
-		tts.write_to_fp(sf)
-		sf.seek(0)
-		mixer.music.load(sf)
-		mixer.music.play()
+		#sf = TemporaryFile()
+		#tts.write_to_fp(sf)
+		#sf.seek(0)
+		#mixer.music.load(sf)
+		#mixer.music.play()
 
-		while mixer.music.get_busy():
-			pygame.time.wait(100)
+		#while mixer.music.get_busy():
+		#	pygame.time.wait(100)
 
 	def listen(self):
 		print("[YOU]\t\t", end="")
