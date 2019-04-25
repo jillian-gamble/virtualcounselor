@@ -32,18 +32,17 @@ CATEGORIES = {
 	"FEELING":2,
 	"MEANING":3,
 	"QUESTION":4,
-	"UNKOWN":5}
+	"UNKNOWN":5}
 
 EMOTION_WORDS = wn.synsets("feeling")[0].hyponyms()
 EMOTION_WORDS.extend(wn.synsets("emotion")[0].hyponyms())
 
-print(EMOTION_WORDS)
+#print(EMOTION_WORDS)
 
 nlp = spacy.load("en_core_web_sm")
 
-def parse_msg(msg):
-	doc = nlp(msg)
-	print("Noun phrases:", [chunk.text for chunk in doc.noun_chunks])
+def parse_msg(statement):
+	doc = nlp(statement.raw_msg)
 	return doc
 
 # reduces the class of tags to adj, noun, adv, verb, or UNK
@@ -155,13 +154,14 @@ def get_sentence_emotions(raw_msg):
 
 def get_topic(raw_msg, parsed_msg):
 
-	return TOPICS[0]
+	return TOPICS["UNKNOWN"]
 
+# this function classifies the statement as experience, feeling/emotion,
+# meaning, question, or other
 def get_category(raw_msg, parsed_msg):
 	#exp_freq = 
 
-
-	return MSG_CATEGORIES[0]
+	return CATEGORIES["UNKNOWN"]
 
 def get_top_three_emotions(arr):
 	max_i = -1
@@ -188,10 +188,9 @@ def get_top_three_emotions(arr):
 
 	return result
 
-if __name__ == "__main__":
-	print("Loading DepecheMood...")
-	EMLEX = load_depeche()
-	print("Loaded DepecheMood")
+print("Loading DepecheMood...")
+EMLEX = load_depeche()
+print("Loaded DepecheMood")
 
 	# while 1:
 	# 	# emotions = get_sentence_emotions(input("Sentence: "))[1]

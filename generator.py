@@ -5,6 +5,7 @@ an utterance as response (and
 speaking it) '''
 
 import app, intake, understander, processor
+import random, string
 
 def question(conversation):
 	print("Questioning...")
@@ -15,10 +16,25 @@ These responses may be verbal (repeating key words and short
 statements) or nonverbal (head-nods and smiling)"'''
 def encourage(conversation):
 	print("Encouraging...")
-	A = "Tell me more about that."
-	B = "I hear what you're saying."
-	C = "I see."
-	D = "Go on."
+
+	candidate_nouns = conversation.most_recent_statement().noun_phrases
+
+	nouns = []
+	for noun in candidate_nouns:
+		if len(noun.split(" ")) > 1:
+			noun[0] = noun[0].upper()
+			nouns.append(noun)
+
+	phrases = [
+		"Interesting. Tell me more.",
+		"Okay, I'm listening.",
+		(nouns[random.randint(0, len(nouns) - 1)] if len(nouns) > 0 else "Alright") + ". Okay.",
+		"Yes, okay.",
+		"Mmmmm, I see.",
+		"Of course."
+	]
+
+	conversation.counselor.speak(phrases[random.randint(0, len(phrases) - 1)])
 
 ''' Definition from Ivey et al (2017) p. 134:
 "Shorten or clarify the essence of what has just been said, but
@@ -42,15 +58,12 @@ interviewing lead or skill was received. "Is that right?"
 def checkout(conversation):
 	print("Checking out...")
 
+
 def reflect_feelings(conversation):
 	print("Reflecting feelings...")
-	
 
 def focus(conversation):
 	print("Focusing...")
-
-def confront(conversation):
-	print("Confronting...")
 
 def reflect_meaning(conversation):
 	print("Reflecting meaning...")
