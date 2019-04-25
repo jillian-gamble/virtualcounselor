@@ -23,9 +23,12 @@ MICROSKILLS = [
 microskill would be best from the
 client's most recent messages'''
 def pick_microskill(conversation):
-	return random.randint(len(0, MICROSKILLS))
+	ran = random.randint(len(0, MICROSKILLS))
 
-def generate_response(nMicroskill, conversation)
+	conversation.most_recent_statement.selected_microskill = ran
+	return ran
+
+def generate_response(nMicroskill, conversation):
 	ms = MICROSKILLS[nMicroskill]
 
 	if ms == "QUES":
@@ -58,4 +61,4 @@ def generate_response(nMicroskill, conversation)
 def test_all_microskills(conversation):
 	for i in range(len(MICROSKILLS)):
 		generate_response(i)
-	
+

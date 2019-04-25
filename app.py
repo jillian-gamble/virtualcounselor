@@ -35,7 +35,30 @@ class Conversation():
 
 	def start(self):
 		self.counselor.introduce(self.client)
+		self.counselor.speak("Ok, " + self.client.name + ". Let's start by learning about who you are.")
+		self.client.personality = intake.conduct_interview()
+		self.counselor.speak("Great, thank you. This will be helpful as I listen to you.")
+		self.counselor.speak("Why don't you tell me what's on your mind?")
 
+		while True:
+			# Get the user's response
+			response = Statement(input("[YOU]\t\t"), self.client)
+
+			# append it to the conversation
+			self.statements.append(response)
+
+			# process its grammatical features, emotions, etc.
+			understander.parse_msg(self)
+
+			# select a microskill
+			self.most_recent_statement.microskill_response = processor.pick_microskill()
+
+			# generate it
+			processor.generate_response(self.most_recent_statement.microskill_response)
+
+
+	def most_recent_statement(self):
+		return self.statements[len(statements) - 1]
 
 class Statement():
 	def __init__(self, raw_msg, speaker):
@@ -45,14 +68,12 @@ class Statement():
 		self.msg_emotions = understander.get_sentence_emotions(self.raw_msg, self.parsed_msg)
 		self.msg_topic = understander.get_topic(self.raw_msg, self.parsed_msg)
 		self.msg_category = understander.get_category(self.raw_msg, self.parsed_msg)
-
-	def process_syntax(self):
-		words = statement.split(" ")
+		self.microskill_response = None
 
 class Client():
 	def __init__(self):
 		self.name = ""
-		self.personality = {}	# a dict of trait-->value
+		self.personality = []	# a dict of trait-->value
 		self.mood = {}			# a dict of descriptor-->value
 
 class Counselor():
@@ -62,7 +83,7 @@ class Counselor():
 								# complementary to the client
 
 	def speak(self, sentence):
-		print("COUNSELOR: " + sentence)
+		print("[COUNSELOR]\t" + sentence)
 
 		tts = gTTS(sentence, lang="en")
 		mixer.init()
@@ -77,11 +98,12 @@ class Counselor():
 			pygame.time.wait(100)
 
 	def listen(self):
-		print("YOU: ", end="")
+		print("[YOU]\t\t", end="")
 
-		transcription = self.get_speech()
+		transcription = input("")# self.get_speech()
 
-		print(transcription)
+
+		#print(transcription)
 
 		return transcription
 
@@ -89,7 +111,6 @@ class Counselor():
 		self.speak("Hello. Welcome to the Virtual Counselor.")
 		self.speak("What's your name?")
 		client.name = self.listen()
-		self.speak("Ok, " + client.name + ". Let's start by learning about who you are.")
 
 	def get_speech(self):
 		r = sr.Recognizer()

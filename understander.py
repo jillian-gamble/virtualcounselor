@@ -18,21 +18,21 @@ print("Loaded imports")
 #from keras.preprocessing.sequence import pad_sequences
 #from sklearn.preprocessing import normalize
 
-TOPICS = [
-	"STRESS",
-	"ANXIETY",
-	"DEPRESSION",
-	"LOSS",
-	"INTERPERSONAL_CONFLICT",
-	"INTERNAL_CONFLICT"
-	"UNKNOWN"]	# more ?
+TOPICS = {
+	"STRESS":0,
+	"ANXIETY":1,
+	"DEPRESSION":2,
+	"LOSS":3,
+	"INTERPERSONAL_CONFLICT":4,
+	"INTERNAL_CONFLICT":5,
+	"UNKNOWN":6}	# more ?
 
-CATEGORIES = [
-	"EXPERIENCE",
-	"FEELING",
-	"MEANING",
-	"QUESTION",
-	"UNKOWN"]
+CATEGORIES = {
+	"EXPERIENCE":1,
+	"FEELING":2,
+	"MEANING":3,
+	"QUESTION":4,
+	"UNKOWN":5}
 
 EMOTION_WORDS = wn.synsets("feeling")[0].hyponyms()
 EMOTION_WORDS.extend(wn.synsets("emotion")[0].hyponyms())
@@ -158,11 +158,10 @@ def get_topic(raw_msg, parsed_msg):
 	return TOPICS[0]
 
 def get_category(raw_msg, parsed_msg):
-	return MSG_CATEGORIES[0]
+	#exp_freq = 
 
-print("Loading DepecheMood...")
-EMLEX = load_depeche()
-print("Loaded DepecheMood")
+
+	return MSG_CATEGORIES[0]
 
 def get_top_three_emotions(arr):
 	max_i = -1
@@ -189,18 +188,23 @@ def get_top_three_emotions(arr):
 
 	return result
 
-while 1:
-	# emotions = get_sentence_emotions(input("Sentence: "))[1]
-	# print("\nFear: " + str(emotions[0]))
-	# print("Amusement: " + str(emotions[1]))
-	# print("Anger: " + str(emotions[2]))
-	# print("Annoyance: " + str(emotions[3]))
-	# print("Indifference: " + str(emotions[4]))
-	# print("Happiness: " + str(emotions[5]))
-	# print("Inspiration: " + str(emotions[6]))
-	# print("Sadness: " + str(emotions[7]) + "\n")
-	# print("Top 3 Emotions: " + str(get_top_three_emotions(emotions)))
-	word = input("Word: ")
-	print(is_emotion_word(word))
-	print(get_emotionality(word))
-	print(get_top_three_emotions(get_lexical_emotions(word)))
+if __name__ == "__main__":
+	print("Loading DepecheMood...")
+	EMLEX = load_depeche()
+	print("Loaded DepecheMood")
+
+	# while 1:
+	# 	# emotions = get_sentence_emotions(input("Sentence: "))[1]
+	# 	# print("\nFear: " + str(emotions[0]))
+	# 	# print("Amusement: " + str(emotions[1]))
+	# 	# print("Anger: " + str(emotions[2]))
+	# 	# print("Annoyance: " + str(emotions[3]))
+	# 	# print("Indifference: " + str(emotions[4]))
+	# 	# print("Happiness: " + str(emotions[5]))
+	# 	# print("Inspiration: " + str(emotions[6]))
+	# 	# print("Sadness: " + str(emotions[7]) + "\n")
+	# 	# print("Top 3 Emotions: " + str(get_top_three_emotions(emotions)))
+	# 	word = input("Word: ")
+	# 	print(is_emotion_word(word))
+	# 	print(get_emotionality(word))
+	# 	print(get_top_three_emotions(get_lexical_emotions(word)))
